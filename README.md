@@ -1,6 +1,5 @@
-<div align="center" id="top"> 
-  ![](underwood.gif)
-</div>
+![](underwood.gif)
+
 
 <h1 align="center">Quantum_sim</h1>
 
