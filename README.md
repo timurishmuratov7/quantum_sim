@@ -1,4 +1,6 @@
-![](underwood.gif)
+<p align="center">
+  <img src="underwood.gif" alt="animated" />
+</p>
 
 
 <h1 align="center">Quantum_sim</h1>
