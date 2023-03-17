@@ -44,8 +44,8 @@ We simulate quantum computers with nice C++ code
 
 ## :sparkles: Features ##
 
-:soon: Construct quantum circuits 
-:soon: Simulate quantum circuits\
+:soon: Construct quantum circuits \
+:soon: Simulate quantum circuits \
 :soon: UI
 
 ## :rocket: Technologies ##
@@ -79,7 +79,7 @@ $ ./run_quantum
 This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
 
 
-Made with :heart: by <a href="https://github.com/timurishmuratov7" target="_blank">{{Tim}}</a>
+Made with :heart: by <a href="https://github.com/timurishmuratov7" target="_blank">Tim</a>
 
 &#xa0;
 
