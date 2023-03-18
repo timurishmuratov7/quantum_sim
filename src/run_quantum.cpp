@@ -1,13 +1,24 @@
 #include <iostream>
-#include "QuantumBit.h"
-#include "RegularAmplitude.h"
+#include <vector>
+#include "InitialState.h"
 
 int main()
 {
-    QuantumBit qbit;
+    QuantumBit qbit1;
+    QuantumBit qbit2;
 
     RegularAmplitude regamp(0, 1);
+    qbit1.setAmplitude(regamp);
+    qbit2.setAmplitude(regamp);
 
-    qbit.setAmplitude(regamp);
-    std::cout << "Welcome to quantum" << std::endl;
+    std::vector<QuantumBit> qubits;
+
+    qubits.push_back(qbit1);
+    qubits.push_back(qbit2);
+
+    InitialState initialState(qubits);
+    
+    initialState.print_initial_state();
+
+    std::cout << '\n' << "Welcome to quantum" << std::endl;
 }
