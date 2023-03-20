@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "InitialState.h"
+#include "Matrix.h"
 
 int main()
 {
