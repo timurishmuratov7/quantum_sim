@@ -1,19 +1,33 @@
-#ifndef INITIALSTATE_H
-#define INITIALSTATE_H
+#ifndef MATRIX_H
+#define MATRIX_H
 
 #include <iostream>
 #include <vector>
 
+// Need a template here cus we have real and imaginary nums
+template<typename Num, size_t rows_size, size_t columns_size>
 class Matrix {
 private:
     int rows, cols;
-    std::vector< std::vector<int> > mat;
+    std::vector< std::vector<Num> > mat;
 
 public:
     Matrix(int rows, int cols) {
         this->rows = rows;
         this->cols = cols;
-        mat.resize(rows, std::vector<int>(cols, 0));
+        mat.resize(rows, std::vector<Num>(cols, 0));
+    }
+
+
+    Matrix(Num inputMatrix[rows_size][columns_size]) {
+        this->rows = rows_size;
+        this->cols = columns_size;
+        mat.resize(rows, std::vector<Num>(cols, 0));
+        for (size_t i = 0; i < rows_size; i++) {
+            for (size_t j = 0; j < columns_size; j++) {
+                mat[i][j] = inputMatrix[i][j];
+            }
+        }
     }
 
     void set(int i, int j, int val) {

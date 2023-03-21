@@ -2,6 +2,7 @@
 #include <vector>
 #include "InitialState.h"
 #include "Matrix.h"
+#include "Gates.h"
 
 int main()
 {
@@ -22,4 +23,6 @@ int main()
     initialState.print_initial_state();
 
     std::cout << '\n' << "Welcome to quantum" << std::endl;
+
+    Identity.print();
 }
