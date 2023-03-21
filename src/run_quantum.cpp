@@ -25,4 +25,8 @@ int main()
     std::cout << '\n' << "Welcome to quantum" << std::endl;
 
     Identity.print();
+
+    std::cout << '\n';
+
+    H.print();
 }

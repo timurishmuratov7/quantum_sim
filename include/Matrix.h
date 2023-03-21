@@ -30,11 +30,11 @@ public:
         }
     }
 
-    void set(int i, int j, int val) {
+    void set(int i, int j, Num val) {
         mat[i][j] = val;
     }
 
-    int get(int i, int j) const {
+    Num get(int i, int j) const {
         return mat[i][j];
     }
 
@@ -57,6 +57,46 @@ public:
                     sum += mat[i][k] * other.get(k, j);
                 }
                 res.set(i, j, sum);
+            }
+        }
+        return res;
+    }
+
+    Matrix operator*(Num other) const {
+        Matrix res(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                res.set(i, j, mat[i][j] * other);
+            }
+        }
+        return res;
+    }
+
+    Matrix operator/(Num other) const {
+        Matrix res(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                res.set(i, j, mat[i][j] / other);
+            }
+        }
+        return res;
+    }
+
+    Matrix operator*=(Num other) const {
+        Matrix res(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                res.set(i, j, mat[i][j] * other);
+            }
+        }
+        return res;
+    }
+
+    Matrix operator/=(Num other) const {
+        Matrix res(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                res.set(i, j, mat[i][j] / other);
             }
         }
         return res;
