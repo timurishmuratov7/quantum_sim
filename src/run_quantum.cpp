@@ -2,7 +2,7 @@
 #include <vector>
 #include "InitialState.h"
 #include "Matrix.h"
-#include "Gates.h"
+#include "QuantumCircuit.h"
 
 int main()
 {
