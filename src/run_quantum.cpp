@@ -1,26 +1,11 @@
 #include <iostream>
 #include <vector>
-#include "InitialState.h"
 #include "Matrix.h"
 #include "QuantumCircuit.h"
+#include "Gates.h"
 
 int main()
 {
-    QuantumBit qbit1;
-    QuantumBit qbit2;
-
-    RegularAmplitude regamp(0, 1);
-    qbit1.setAmplitude(regamp);
-    qbit2.setAmplitude(regamp);
-
-    std::vector<QuantumBit> qubits;
-
-    qubits.push_back(qbit1);
-    qubits.push_back(qbit2);
-
-    InitialState initialState(qubits);
-    
-    initialState.print_initial_state();
 
     std::cout << '\n' << "Welcome to quantum" << std::endl;
 
@@ -30,14 +15,14 @@ int main()
 
     //H.print();
 
-    QuantumCircuit qc(2);
+    QuantumCircuit qc(3);
 
     // Set the initial state of the qubits to |01⟩
-    std::vector<std::complex <double> > initial_state = {0, 0, 0, 1};
+    std::vector<std::complex <double> > initial_state = {0, 0, 0, 0, 0, 0, 0, 1};
     qc.setInitialState(initial_state);
 
     qc.applyOperator(0, H);
-    qc.applyOperator(1, H);
+    qc.applyCNOT(0,1);
 
     std::cout << "Before measurement:" << std::endl;
     std::cout << qc << std::endl;

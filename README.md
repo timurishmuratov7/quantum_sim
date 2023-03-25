@@ -69,7 +69,14 @@ $ git clone https://github.com/timurishmuratov7/quantum_sim
 # Access
 $ cd quantum_sim
 
-# Build the project
+# Build the Cmake project (if it's not build automatically by your dev environment)
+$ cmake
+
+# Go to build directory
+
+$ cd build
+
+# Compile the program
 $ make
 
 # Run the project
