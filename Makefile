@@ -1,5 +1,5 @@
-CXX = g++
-CXXFLAGS = -Wall -Wextra -Wpedantic -Iinclude 
+CXX = g++ 
+CXXFLAGS = -std=c++11 -Wall -Wextra -Wpedantic -Iinclude 
 LIBS = 
 
 SRCDIR = src
