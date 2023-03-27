@@ -2,23 +2,23 @@
 #include <cmath>
 #include "Matrix.h"
 
-int identity_vals[2][2] = {
+std::complex <double> identity_vals[2][2] = {
     {1, 0},
     {0, 1}
 };
-Matrix<int, 2, 2> Identity(identity_vals);
+Matrix<std::complex <double>, 2, 2> Identity(identity_vals);
 
-int x_vals[2][2] = {
+std::complex <double> x_vals[2][2] = {
     {0, 1},
     {1, 0}
 };
-Matrix<int, 2, 2> X(x_vals);
+Matrix<std::complex <double>, 2, 2> X(x_vals);
 
-int z_vals[2][2] = {
+std::complex <double> z_vals[2][2] = {
     {1, 0},
     {0, -1}
 };
-Matrix<int, 2, 2> Z(z_vals);
+Matrix<std::complex <double>, 2, 2> Z(z_vals);
 
 std::complex <double> h_vals[2][2] = {
     {1 / sqrt(2), 1 / sqrt(2)},

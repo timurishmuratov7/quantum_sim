@@ -22,7 +22,7 @@ int main()
     qc.setInitialState(initial_state);
 
     qc.applyOperator(0, H);
-    qc.applyOperator(1,H);
+    qc.applyCNOT(0,1);
 
     std::cout << "Before measurement:" << std::endl;
     std::cout << qc << std::endl;

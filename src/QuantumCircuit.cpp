@@ -35,8 +35,6 @@ void QuantumCircuit::applyOperator(int target_qubit, Matrix<std::complex <double
     for (int i = 0; i < num_states; i++) {
         if ((i >> target_qubit) & 1) {
             int j = i ^ (1 << target_qubit);
-            //std::cout << "mstate: " << i << " " << m_state[i] << std::endl;
-            //std::cout << "mstate: " << j << " " << m_state[j] << std::endl;
             std::complex <double> a = Operator.get(0, 0) * m_state[i] + Operator.get(0, 1) * m_state[j];
             std::complex <double> b = Operator.get(1, 0) * m_state[i] + Operator.get(1, 1) * m_state[j];
             m_state[i] = a;
@@ -62,6 +60,64 @@ void QuantumCircuit::applyCNOT(int control_qubit, int target_qubit) {
     }
 }
 
+void QuantumCircuit::applyCZ(int control_qubit, int target_qubit) {
+    // Check that the control and target qubits are valid
+    if (control_qubit < 0 || control_qubit >= m_num_qubits ||
+        target_qubit < 0 || target_qubit >= m_num_qubits) {
+        std::cerr << "Error: invalid qubit index" << std::endl;
+        return;
+    }
+
+    std::complex<double> z_vals[2][2] = {
+    {1, 0},
+    {0, -1}
+    };
+    Matrix<std::complex <double>, 2, 2> cz_matrix(z_vals);
+    // Define the CZ matrix as a 2x2 array
+
+    // Compute the tensor product of identity matrices and CZ matrix
+    int n = m_num_qubits;
+    std::vector<std::complex<double>> tensor_product_state(1 << n);
+    for (int i = 0; i < tensor_product_state.size(); i++) {
+        tensor_product_state[i] = 1.0;
+    }
+    for (int q = 0; q < n; q++) {
+        if (q == control_qubit) {
+            for (int i = 0; i < (1 << n); i++) {
+                int row = (i >> q) & 1;
+                for (int j = 0; j < (1 << q); j++) {
+                    int index = (i & ~(1 << q)) | (j << q);
+                    tensor_product_state[index + row*(1 << q)] = cz_matrix.get(row, row);
+                    tensor_product_state[index + (1-row)*(1 << q)] = cz_matrix.get(row, 1-row);
+                }
+            }
+        }
+        else if (q == target_qubit) {
+            for (int i = 0; i < (1 << n); i++) {
+                int col = (i >> q) & 1;
+                for (int j = 0; j < (1 << q); j++) {
+                    int index = (i & ~(1 << q)) | (j << q);
+                    tensor_product_state[index + col*(1 << q)] = cz_matrix.get(col, col);
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < (1 << n); i++) {
+                int bit = (i >> q) & 1;
+                for (int j = 0; j < (1 << q); j++) {
+                    int index = (i & ~(1 << q)) | (j << q);
+                    if (bit == 0) {
+                        tensor_product_state[index] *= 1.0;
+                    }
+                }
+            }
+        }
+    }
+
+    // Update the state vector with the tensor product state
+    m_state = tensor_product_state;
+}
+
 int QuantumCircuit::measure(int target_qubit) {
     if (target_qubit < 0 || target_qubit >= m_num_qubits) {
         std::cerr << "Error: Invalid target qubit" << std::endl;
@@ -82,8 +138,6 @@ int QuantumCircuit::measure(int target_qubit) {
     std::uniform_real_distribution<> dis(0, 1);
     double r = dis(gen);
     int outcome = (r < probabilities[0]) ? 0 : 1;
-
-    std::cout << "Outcome: " << outcome << '\n';
 
     // Update the state of the quantum system based on the measurement outcome
     for (int i = 0; i < num_states; i++) {

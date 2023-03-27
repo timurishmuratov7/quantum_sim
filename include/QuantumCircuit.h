@@ -16,6 +16,8 @@ class QuantumCircuit {
 
         void applyCNOT(int control_qubit, int target_qubit);
 
+        void applyCZ(int control_qubit, int target_qubit);
+
         int measure(int target_qubit);
 
         friend std::ostream& operator<<(std::ostream& os, const QuantumCircuit& qc) {

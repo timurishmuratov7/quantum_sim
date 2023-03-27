@@ -11,10 +11,23 @@ set(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # Add source files
-set(SOURCES
+set(SOURCES1
     src/run_quantum.cpp 
     src/QuantumCircuit.cpp 
-    src/InitialState.cpp
 )
 
-add_executable(quantum_sim ${SOURCES})
+set(SOURCES2
+    src/BellState.cpp 
+    src/QuantumCircuit.cpp 
+)
+
+set(SOURCES3
+    src/QuantumTeleportation.cpp 
+    src/QuantumCircuit.cpp 
+)
+
+add_executable(quantum_sim ${SOURCES1})
+
+add_executable(bell_state ${SOURCES2})
+
+add_executable(quantum_teleport ${SOURCES3})
