@@ -58,7 +58,7 @@ The following tools were used in this project:
 
 ## :white_check_mark: Requirements ##
 
-Don't be boring and have g++ compiler
+Don't be boring, have a g++ compiler and cmake installed
 
 ## :checkered_flag: Starting ##
 
@@ -73,7 +73,6 @@ $ cd quantum_sim
 $ cmake
 
 # Go to build directory
-
 $ cd build
 
 # Compile the program
