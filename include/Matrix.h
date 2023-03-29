@@ -37,7 +37,7 @@ public:
     Num get(int i, int j) const {
         return mat[i][j];
     }
-
+    
     Matrix operator+(const Matrix& other) const {
         Matrix res(rows, cols);
         for (int i = 0; i < rows; i++) {

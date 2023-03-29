@@ -51,14 +51,50 @@ void QuantumCircuit::applyCNOT(int control_qubit, int target_qubit) {
         return;
     }
 
-    // Apply the CNOT gate to the state vector
-    for (int i = 0; i < m_state.size(); i++) {
-        if (((i >> control_qubit) & 1) == 1) {
-            int flipped_bit = i ^ (1 << target_qubit);
-            std::swap(m_state[i], m_state[flipped_bit]);
+
+    // Compute the CNOT matrix
+    int dim = m_state.size();
+    std::vector<std::complex<double>> cnot_matrix(dim * dim, 0);
+    for (int i = 0; i < dim; i++) {
+        if (((i >> control_qubit) & 1) == 1 && ((i >> target_qubit) & 1) == 0) {
+            cnot_matrix[i * dim + i] = 0;
+            cnot_matrix[i * dim + i ^ (1 << target_qubit) ^ (1 << control_qubit)] = 1;
+            cnot_matrix[i * dim + i ^ (1 << target_qubit)] = 0;
+            cnot_matrix[i * dim + i ^ (1 << control_qubit)] = 1;
+        }
+        else if (((i >> control_qubit) & 1) == 0 && ((i >> target_qubit) & 1) == 1) {
+            cnot_matrix[i * dim + i] = 0.0;
+            cnot_matrix[i * dim + i ^ (1 << target_qubit) ^ (1 << control_qubit)] = 1;
+            cnot_matrix[i * dim + i ^ (1 << target_qubit)] = 1;
+            cnot_matrix[i * dim + i ^ (1 << control_qubit)] = 0;
+        }
+        else {
+            cnot_matrix[i * dim + i] = 1.0;
         }
     }
+
+    std::cout.precision(0);
+
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            int idx = i * dim + j;
+            std::cout << std::fixed << cnot_matrix[idx].real() << " ";
+        }
+        std::cout << std::endl;
+    }
+     std::cout << std::endl;
+
+
+    // Update the state vector with the CNOT matrix
+    std::vector<std::complex<double>> new_state(dim, 0.0);
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            new_state[i] += cnot_matrix[i * dim + j] * m_state[j];
+        }
+    }
+    m_state = new_state;
 }
+
 
 void QuantumCircuit::applyCZ(int control_qubit, int target_qubit) {
     // Check that the control and target qubits are valid
