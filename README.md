@@ -46,8 +46,8 @@ We simulate quantum computers with nice C++ code
 
 ## :sparkles: Features ##
 
-:white_check_mark: Construct quantum circuits \
-:white_check_mark: Simulate quantum circuits \
+🚧 Construct quantum circuits 🚧
+:soon: Simulate quantum circuits \
 :soon: UI
 
 ## :rocket: Technologies ##

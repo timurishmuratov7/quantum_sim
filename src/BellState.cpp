@@ -49,7 +49,6 @@ int main()
     Matrix<std::complex <double>, 4, 4>  newM = tensor(H, Identity);
     Matrix<std::complex <double>, 8, 8>  newestM = tensor(newM, Identity);
 
-
     std::cout << "Newest matrix: " <<std::endl;
     newestM.print();
 
