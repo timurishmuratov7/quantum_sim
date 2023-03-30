@@ -37,7 +37,7 @@ public:
     Num get(int i, int j) const {
         return mat[i][j];
     }
-    
+
     Matrix operator+(const Matrix& other) const {
         Matrix res(rows, cols);
         for (int i = 0; i < rows; i++) {
@@ -111,6 +111,41 @@ public:
         }
     }
 };
+
+
+template<typename Num, size_t rows, size_t cols, size_t other_rows, size_t other_cols>
+Matrix<Num, rows*other_rows, cols*other_cols> tensor(const Matrix<Num, rows, cols> matrix1, const Matrix<Num, other_rows, other_cols> other) {
+
+        Matrix<Num, rows*other_rows, cols*other_cols> result(other_rows*rows, other_cols*cols);
+
+        for (int i = 0; i < other_rows; i++) {
+            for (int j = 0; j < other_cols; j++){
+                // Internal loop
+                Num current_num = other.get(i, j);
+                Num res = 0;
+                for(int internal_i = 0; internal_i<rows; internal_i++) {
+                    for(int internal_j = 0; internal_j<cols; internal_j++) {
+                        res = matrix1.get(internal_i, internal_j) * current_num;
+                        int row_idx = internal_i+cols*j;
+                        int col_idx = internal_j+rows*i;
+                       // std::cout << "row_idx: " <<  row_idx << ", col_idx: " << col_idx
+                       // << ", curr_num * mat_val: " << current_num << "*" << matrix1.get(internal_i, internal_j) << " = " << res << std::endl;
+
+                        result.set(row_idx, col_idx, res);     
+                        
+                        if (row_idx == 1 && col_idx == 1) {
+                            std::cout << "res is set to: " << res << std::endl;
+                            result.print();
+                        }                  
+                    }  
+                }
+            }
+        }
+        //result.print();
+
+        return result;
+
+    }
 
 
 #endif
