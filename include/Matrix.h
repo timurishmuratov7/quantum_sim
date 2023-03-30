@@ -48,11 +48,33 @@ public:
         return res;
     }
 
+    Matrix multiply(const Matrix& other) const {
+        Matrix res(rows, other.cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                res.set(i, j, this->get(i, j) * other.get(i, j));
+            }
+        }
+        return res;
+    }
+
+    Matrix multiply(const std::vector<Num>& other) const {
+        Matrix res(rows, 1);
+        for (int i = 0; i < rows; i++) {
+            Num sum = 0;
+            for (int k = 0; k < cols; k++) {
+                sum += mat[i][k] * other[k];
+            }
+            res.set(i, 0, sum);
+        }
+        return res;
+    }
+
     Matrix operator*(const Matrix& other) const {
         Matrix res(rows, other.cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < other.cols; j++) {
-                int sum = 0;
+                Num sum = 0;
                 for (int k = 0; k < cols; k++) {
                     sum += mat[i][k] * other.get(k, j);
                 }
