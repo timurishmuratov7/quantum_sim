@@ -25,7 +25,7 @@ void QuantumCircuit::setInitialState(const std::vector<std::complex <double> >& 
 }
 
 
-void QuantumCircuit::applyOperator(int target_qubit, Matrix<std::complex <double>, 2, 2> Operator) {
+void QuantumCircuit::applyOperator(int target_qubit, Matrix<std::complex <double> > Operator) {
     if (target_qubit < 0 || target_qubit >= m_num_qubits) {
         std::cerr << "Error: Invalid target qubit" << std::endl;
         return;
@@ -108,7 +108,7 @@ void QuantumCircuit::applyCZ(int control_qubit, int target_qubit) {
     {1, 0},
     {0, -1}
     };
-    Matrix<std::complex <double>, 2, 2> cz_matrix(z_vals);
+    Matrix<std::complex <double> > cz_matrix(z_vals);
     // Define the CZ matrix as a 2x2 array
 
     // Compute the tensor product of identity matrices and CZ matrix
