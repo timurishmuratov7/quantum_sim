@@ -14,9 +14,9 @@ class QuantumCircuit {
 
         void applyOperator(int target_qubit, Matrix<std::complex <double> > Operator);
 
-        void applyCNOT(int control_qubit, int target_qubit);
+        void applyOperator(int control_qubit, int target_qubit, Matrix<std::complex <double> > Operator);
 
-        void applyCZ(int control_qubit, int target_qubit);
+        void nextLayer();
 
         int measure(int target_qubit);
 
@@ -29,7 +29,9 @@ class QuantumCircuit {
 
     private:
         int m_num_qubits;
-        int n_layers;
+        int layer_cursor;
+
+        std::vector<std::vector<Matrix<std::complex<double> > > > unitary;
 
         std::vector< std::complex <double> > m_state;
 };

@@ -135,6 +135,17 @@ public:
         return res;
     }
 
+    bool operator!=(Matrix<Num>& other) const {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                if(mat[i][j] != other.get(i, j)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     int get_n_rows() const {
         return rows;
     }
