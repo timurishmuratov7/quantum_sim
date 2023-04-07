@@ -4,6 +4,7 @@
 #include <random>
 
 #include "Matrix.h"
+#include "Gates.h"
 
 
 class QuantumCircuit {
@@ -12,9 +13,9 @@ class QuantumCircuit {
 
         void setInitialState(const std::vector<std::complex <double> >& initial_state);
 
-        void applyOperator(int target_qubit, Matrix<std::complex <double> > Operator);
+        void applyOperator(int target_qubit, const Matrix<std::complex <double> > Operator);
 
-        void applyOperator(int control_qubit, int target_qubit, Matrix<std::complex <double> > Operator);
+        void applyOperator(int control_qubit, int target_qubit, const Matrix<std::complex <double> > Operator);
 
         void nextLayer();
 

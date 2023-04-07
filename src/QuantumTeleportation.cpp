@@ -18,6 +18,8 @@ cvector poeer = {1/sqrt(2), 0, 1/sqrt(2), 0, 0, 0, 0, 0}; // Alice's state
 
 int main() {
 
+    /*
+
     QuantumCircuit qc(3);
 
     // Set the initial state of the qubits to |01⟩
@@ -64,7 +66,8 @@ int main() {
     cout << "Measured " << result << endl;
  
     cout << "After measurement:" << endl;
-    cout << qc << endl;
+    cout << qc << endl;*/
+    
     
     return 0;
 }
