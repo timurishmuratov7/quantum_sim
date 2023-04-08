@@ -21,6 +21,8 @@ class QuantumCircuit {
 
         int measure(int target_qubit);
 
+        void print_circuit();
+
         friend std::ostream& operator<<(std::ostream& os, const QuantumCircuit& qc) {
             for (int i = 0; i < qc.m_state.size(); i++) {
                 os << qc.m_state[i] << std::endl;

@@ -2,9 +2,12 @@
 
 Gate::Gate() {
     this->gate_matrix = Identity;
+    this->name = "I";
 }
 
 Gate::Gate(const Matrix<std::complex<double> > matrix, bool is_control_gate){
+
+    this->name = matrix.get_name();
 
     this->gate_matrix = matrix;
     this->is_control_gate = is_control_gate;
@@ -33,6 +36,10 @@ void Gate::set_control(int qubit_number){
 
 int Gate::get_control(){
     return this->control_qubit;
+}
+
+std::string Gate::get_name(){
+    return this->name;
 }
 
 Matrix<std::complex <double> > Gate::get_matrix(){

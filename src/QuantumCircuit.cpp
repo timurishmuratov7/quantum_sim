@@ -1,6 +1,9 @@
 #include "QuantumCircuit.h"
 
-QuantumCircuit::QuantumCircuit(int num_qubits) : m_num_qubits(num_qubits), m_state(1 << num_qubits) {}
+QuantumCircuit::QuantumCircuit(int num_qubits) : m_num_qubits(num_qubits), m_state(1 << num_qubits) {
+    this->layer_cursor = 0;
+
+}
 
 void QuantumCircuit::setInitialState(const std::vector<std::complex <double> >& initial_state) {
     // Check that the initial state has the correct size
@@ -36,7 +39,7 @@ void QuantumCircuit::applyOperator(int target_qubit, const Matrix<std::complex <
     Gate operator_gate(Operator, false);
     Gate empty_gate = Gate();
 
-    if (layer_cursor > unitary.size()) {
+    if (layer_cursor >= unitary.size()) {
         for (int row = 0; row < m_num_qubits; row++){
             layer.push_back(empty_gate);
         }
@@ -44,14 +47,14 @@ void QuantumCircuit::applyOperator(int target_qubit, const Matrix<std::complex <
     }
 
     // If something was before the operator -> put operator on the next layer
-    if(unitary[layer_cursor-1][target_qubit] != empty_gate){
+    if(unitary[layer_cursor][target_qubit].get_name() != "I"){
         layer_cursor++;
-        if(layer_cursor > unitary.size()) {
-            for (int row = 0; row < m_num_qubits; row++){
-                layer.push_back(empty_gate);
-            }
-            unitary.push_back(layer);
+
+        for (int row = 0; row < m_num_qubits; row++){
+            layer.push_back(empty_gate);
         }
+        unitary.push_back(layer);
+        
         operator_gate.set_target(target_qubit);
         unitary[layer_cursor][target_qubit] = operator_gate;
     } else {
@@ -109,6 +112,23 @@ void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Ma
 
 void QuantumCircuit::nextLayer(){
     this->layer_cursor++;
+}
+
+void QuantumCircuit::print_circuit(){
+    if(this->unitary.size() == 0){
+        std::cout << "No operators presented in the circuit, so printing initial state: " << std::endl;
+        for (int i = 0; i < this->m_state.size(); i++) {
+            std::cout << this->m_state[i] << std::endl;
+        }
+    } else {
+        std::cout << "Current circuit looks like this: " << std::endl;
+        for(int qubit=0; qubit < m_num_qubits; qubit++){
+            for(int op=0;  op<=layer_cursor; op++){
+                std::cout << "-" << unitary[op][qubit].get_name() << "-";
+            }
+            std::cout << std::endl;
+        }
+    }
 }
 
 int QuantumCircuit::measure(int target_qubit) {

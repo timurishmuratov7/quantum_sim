@@ -12,6 +12,8 @@ private:
     int rows, cols;
     std::vector<std::vector< Num > > mat;
 
+    std::string name;
+
 public:
 
     Matrix() {
@@ -48,6 +50,18 @@ public:
         }
     }
 
+    Matrix(const Num inputMatrix[2][2], std::string name) {
+        this->rows = 2;
+        this->cols = 2;
+        this->name = name;
+        mat.resize(rows, std::vector<Num>(cols, 0));
+        for (size_t i = 0; i < 2; i++) {
+            for (size_t j = 0; j < 2; j++) {
+                mat[i][j] = inputMatrix[i][j];
+            }
+        }
+    }
+
     Matrix(Num inputMatrix[4][4]) {
         this->rows = 4;
         this->cols = 4;
@@ -71,12 +85,28 @@ public:
         }
     }
 
+    Matrix(const Num inputMatrix[4][4], std::string name) {
+        this->rows = 4;
+        this->cols = 4;
+        this->name = name;
+        mat.resize(rows, std::vector<Num>(cols, 0));
+        for (size_t i = 0; i < 4; i++) {
+            for (size_t j = 0; j < 4; j++) {
+                mat[i][j] = inputMatrix[i][j];
+            }
+        }
+    }
+
     void set(int i, int j, Num  val) {
         mat[i][j] = val;
     }
 
     Num get(int i, int j) const {
         return mat[i][j];
+    }
+
+    std::string get_name() const {
+        return this->name;
     }
 
     Matrix operator+(const Matrix& other) const {

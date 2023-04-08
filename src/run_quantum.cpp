@@ -19,19 +19,20 @@ int main()
 
     QuantumCircuit qc(3);
 
+     std::cout << '\n' << "All good 22" << std::endl;
+
     // Set the initial state of the qubits to |01⟩
     std::vector<std::complex <double> > initial_state = {0, 0, 0, 0, 0, 0, 0, 1};
     qc.setInitialState(initial_state);
 
+     std::cout << '\n' << "All good 28" << std::endl;
+
     qc.applyOperator(0, H);
-    qc.applyOperator(1,H);
+    qc.applyOperator(1, H);
 
-    std::cout << "Before measurement:" << std::endl;
-    std::cout << qc << std::endl;
+    qc.applyOperator(0, X);
 
-    int result = qc.measure(0);
-    std::cout << "Measured " << result << std::endl;
+     std::cout << '\n' << "All good 33" << std::endl;
 
-    std::cout << "After measurement:" << std::endl;
-    std::cout << qc << std::endl;
+    qc.print_circuit();
 }
