@@ -13,6 +13,8 @@ int main()
 
     std::cout << '\n';
 
+    Gate hadamard(H, false);
+
     //H.print();
 
     QuantumCircuit qc(3);

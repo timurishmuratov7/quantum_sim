@@ -14,16 +14,19 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCES1
     src/run_quantum.cpp 
     src/QuantumCircuit.cpp 
+    src/Gate.cpp 
 )
 
 set(SOURCES2
     src/BellState.cpp 
     src/QuantumCircuit.cpp 
+    src/Gate.cpp 
 )
 
 set(SOURCES3
     src/QuantumTeleportation.cpp 
     src/QuantumCircuit.cpp 
+    src/Gate.cpp 
 )
 
 add_executable(quantum_sim ${SOURCES1})

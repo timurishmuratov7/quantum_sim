@@ -13,6 +13,13 @@ private:
     std::vector<std::vector< Num > > mat;
 
 public:
+
+    Matrix() {
+        this->rows = 0;
+        this->cols = 0;
+    }
+
+
     Matrix(int rows, int cols) {
         this->rows = rows;
         this->cols = cols;

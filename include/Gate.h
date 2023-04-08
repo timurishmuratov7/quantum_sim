@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cmath>
+#include <complex>
 #include "Matrix.h"
 
 class Gate{
@@ -17,7 +18,7 @@ class Gate{
   public:
 
     Gate(const Matrix<std::complex <double> > matrix, bool is_control_gate);
-    Gate(const std::complex <double> matrix_values, bool is_control_gate);
+    Gate(const std::complex <double> matrix_valuesp[2][2], bool is_control_gate);
 
     void set_target(int qubit_number);
     int get_target();
