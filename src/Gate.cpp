@@ -38,6 +38,10 @@ int Gate::get_control(){
     return this->control_qubit;
 }
 
+void Gate::set_name(std::string name){
+    this->name = name;
+}
+
 std::string Gate::get_name(){
     return this->name;
 }

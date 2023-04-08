@@ -32,6 +32,8 @@ int main()
 
     qc.applyOperator(0, X);
 
+    qc.applyOperator(0, 1, CNOT);
+
      std::cout << '\n' << "All good 33" << std::endl;
 
     qc.print_circuit();

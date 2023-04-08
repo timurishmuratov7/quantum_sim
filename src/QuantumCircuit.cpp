@@ -77,6 +77,8 @@ void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Ma
     }
 
     Gate operator_gate(Operator, true);
+    operator_gate.set_name(operator_gate.get_name() + std::to_string(control_qubit) + std::to_string(target_qubit));
+
     Gate empty_gate = Gate();
 
     std::vector<Gate> layer;
@@ -89,14 +91,14 @@ void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Ma
     }
 
     // If something was before the operator -> put operator on the next layer
-    if(unitary[layer_cursor-1][target_qubit] != empty_gate){
+    if(unitary[layer_cursor][target_qubit].get_name() != "I" || unitary[layer_cursor][control_qubit].get_name() != "I"){
         layer_cursor++;
-        if (layer_cursor > unitary.size()) {
-            for (int row = 0; row < m_num_qubits; row++){
-                layer.push_back(empty_gate);
-            }
-            unitary.push_back(layer);
+
+        for (int row = 0; row < m_num_qubits; row++){
+            layer.push_back(empty_gate);
         }
+        unitary.push_back(layer);
+
         operator_gate.set_control(control_qubit);
         operator_gate.set_target(target_qubit);
         unitary[layer_cursor][control_qubit] = operator_gate;

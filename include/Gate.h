@@ -32,9 +32,10 @@ class Gate{
     void set_control(int qubit_number);
     int get_control();
 
-    Matrix<std::complex <double> > get_matrix();
-
+    void set_name(std::string name);
     std::string get_name();
+
+    Matrix<std::complex <double> > get_matrix();
 
     void print_gate();
 
