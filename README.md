@@ -46,7 +46,7 @@ We simulate quantum computers with nice C++ code
 
 ## :sparkles: Features ##
 
-🚧 Construct quantum circuits 🚧 \
+✅ Construct quantum circuits \
 :soon: Simulate quantum circuits \
 :soon: UI
 
