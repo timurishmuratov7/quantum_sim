@@ -32,7 +32,7 @@ class QuantumCircuit {
         int m_num_qubits;
         int layer_cursor;
 
-        std::vector<std::vector<Matrix<std::complex<double> > > > unitary;
+        std::vector<std::vector<Gate > > unitary;
 
         std::vector< std::complex <double> > m_state;
 };

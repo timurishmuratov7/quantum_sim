@@ -1,5 +1,9 @@
 #include "Gate.h"
 
+Gate::Gate() {
+    this->gate_matrix = Identity;
+}
+
 Gate::Gate(const Matrix<std::complex<double> > matrix, bool is_control_gate){
 
     this->gate_matrix = matrix;
@@ -48,4 +52,8 @@ void Gate::print_gate(){
         std::cout << "Control qubit is: " << this->control_qubit << std::endl;
     }
 
+}
+
+bool Gate::operator!=(const Gate& other) const {
+    return this->gate_matrix != other.gate_matrix;
 }

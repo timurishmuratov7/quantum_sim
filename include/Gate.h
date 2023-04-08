@@ -17,6 +17,10 @@ class Gate{
 
   public:
 
+    //Empty gate (i.e. Identity matrix)
+    Gate();
+
+    //Clifford gates contructors
     Gate(const Matrix<std::complex <double> > matrix, bool is_control_gate);
     Gate(const std::complex <double> matrix_valuesp[2][2], bool is_control_gate);
 
@@ -29,6 +33,8 @@ class Gate{
     Matrix<std::complex <double> > get_matrix();
 
     void print_gate();
+
+    bool operator!=(const Gate& other) const;
 
 };
 

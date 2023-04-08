@@ -31,26 +31,36 @@ void QuantumCircuit::applyOperator(int target_qubit, const Matrix<std::complex <
         return;
     }
 
-    if (layer_cursor == 0){
-        std::vector<Matrix<std::complex<double> > > layer;
+    std::vector<Gate> layer;
+
+    Gate operator_gate(Operator, false);
+    Gate empty_gate = Gate();
+
+    if (layer_cursor > unitary.size()) {
         for (int row = 0; row < m_num_qubits; row++){
-            layer.push_back(Identity);
+            layer.push_back(empty_gate);
         }
-        unitary[layer_cursor][target_qubit] = Operator;
-    } else {
-        // If something was before the operator -> put operator to the next layer
-        if(unitary[layer_cursor-1][target_qubit] != Identity){
-            layer_cursor++;
-            std::vector<Matrix<std::complex<double> > > layer;
+        unitary.push_back(layer);
+    }
+
+    // If something was before the operator -> put operator on the next layer
+    if(unitary[layer_cursor-1][target_qubit] != empty_gate){
+        layer_cursor++;
+        if(layer_cursor > unitary.size()) {
             for (int row = 0; row < m_num_qubits; row++){
-                layer.push_back(Identity);
+                layer.push_back(empty_gate);
             }
-            unitary[layer_cursor][target_qubit] = Operator;
-        } 
+            unitary.push_back(layer);
+        }
+        operator_gate.set_target(target_qubit);
+        unitary[layer_cursor][target_qubit] = operator_gate;
+    } else {
+        // If nothing was against putting this Operator on the same layer -> put it.
+        operator_gate.set_target(target_qubit);
+        unitary[layer_cursor][target_qubit] = operator_gate;
     }
         
 }
-
 
 void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Matrix<std::complex <double> > Operator) {
     if (target_qubit < 0 || target_qubit >= m_num_qubits || control_qubit == target_qubit) {
@@ -63,9 +73,43 @@ void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Ma
         return;
     }
 
-    
+    Gate operator_gate(Operator, true);
+    Gate empty_gate = Gate();
+
+    std::vector<Gate> layer;
+
+    if (layer_cursor > unitary.size()) {
+        for (int row = 0; row < m_num_qubits; row++){
+            layer.push_back(empty_gate);
+        }
+        unitary.push_back(layer);
+    }
+
+    // If something was before the operator -> put operator on the next layer
+    if(unitary[layer_cursor-1][target_qubit] != empty_gate){
+        layer_cursor++;
+        if (layer_cursor > unitary.size()) {
+            for (int row = 0; row < m_num_qubits; row++){
+                layer.push_back(empty_gate);
+            }
+            unitary.push_back(layer);
+        }
+        operator_gate.set_control(control_qubit);
+        operator_gate.set_target(target_qubit);
+        unitary[layer_cursor][control_qubit] = operator_gate;
+        unitary[layer_cursor][target_qubit] = operator_gate;
+    } else {
+        // If nothing was against putting this Operator on the same layer -> put it.
+        operator_gate.set_control(control_qubit);
+        operator_gate.set_target(target_qubit);
+        unitary[layer_cursor][control_qubit] = operator_gate;
+        unitary[layer_cursor][target_qubit] = operator_gate;
+    }
 }
 
+void QuantumCircuit::nextLayer(){
+    this->layer_cursor++;
+}
 
 int QuantumCircuit::measure(int target_qubit) {
     if (target_qubit < 0 || target_qubit >= m_num_qubits) {
