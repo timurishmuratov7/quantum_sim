@@ -4,7 +4,7 @@
 #include <random>
 
 #include "Matrix.h"
-#include "Gates.h"
+#include "Gate.h"
 
 
 class QuantumCircuit {

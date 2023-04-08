@@ -1,9 +1,35 @@
-#ifndef GATES_H
-#define GATES_H
+#ifndef GATE_H
+#define GATE_H
 
 #include <vector>
 #include <cmath>
 #include "Matrix.h"
+
+class Gate{
+  private:
+    int target_qubit;
+    int control_qubit;
+
+    Matrix<std::complex <double> > gate_matrix;
+
+    bool is_control_gate;
+
+  public:
+
+    Gate(const Matrix<std::complex <double> > matrix, bool is_control_gate);
+    Gate(const std::complex <double> matrix_values, bool is_control_gate);
+
+    void set_target(int qubit_number);
+    int get_target();
+
+    void set_control(int qubit_number);
+    int get_control();
+
+    Matrix<std::complex <double> > get_matrix();
+
+    void print_gate();
+
+};
 
 const std::complex <double> identity_vals[2][2] = {
     {1, 0},

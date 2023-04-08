@@ -2,7 +2,7 @@
 #include <cmath>
 #include <complex>
 #include <vector>
-#include "Gates.h"
+#include "Gate.h"
 #include "QuantumCircuit.h"
 
 using namespace std;
@@ -67,7 +67,7 @@ int main() {
  
     cout << "After measurement:" << endl;
     cout << qc << endl;*/
-    
+
     
     return 0;
 }

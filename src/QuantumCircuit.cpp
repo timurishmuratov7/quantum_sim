@@ -63,17 +63,7 @@ void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Ma
         return;
     }
 
-
-    int num_states = m_state.size();
-    for (int i = 0; i < num_states; i++) {
-        if ((i >> target_qubit) & 1) {
-            int j = i ^ (1 << target_qubit);
-            std::complex <double> a = Operator.get(0, 0) * m_state[i] + Operator.get(0, 1) * m_state[j];
-            std::complex <double> b = Operator.get(1, 0) * m_state[i] + Operator.get(1, 1) * m_state[j];
-            m_state[i] = a;
-            m_state[j] = b;
-        }
-    }
+    
 }
 
 
