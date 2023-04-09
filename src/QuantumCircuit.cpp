@@ -116,6 +116,45 @@ void QuantumCircuit::nextLayer(){
     this->layer_cursor++;
 }
 
+Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_number){
+
+    //Let's first get all the gates on this layer
+
+    std::cout << '\n' << unitary.size() << std::endl;
+
+    std::vector<Gate> gates;
+    std::map<int, int> control2target_qubits;
+
+    for(int i=0; i<m_num_qubits; i++){
+        gates.push_back(unitary[layer_number][i]);
+    }
+
+    for(int i=0; i<m_num_qubits; i++){
+        Gate tmp_gate = gates[i];
+        if(tmp_gate.get_is_control()){
+            control2target_qubits[tmp_gate.get_control()] = tmp_gate.get_target();
+        }
+    }
+
+    std::cout << '\n' << "All good 137" << std::endl;
+
+    // need to do tensor products for matrices
+    if(m_num_qubits == 1){
+        return unitary[layer_number][0].get_matrix();
+    }
+
+    Matrix<std::complex<double>> final_layer_unitary = gates[m_num_qubits-1].get_matrix();
+    
+    for(int i=m_num_qubits-1; i>0; i--){
+        final_layer_unitary = tensor(gates[i-1].get_matrix(), final_layer_unitary);
+    }
+
+    return final_layer_unitary;
+
+    // if there are control gates -> use algorithm to calculate the unitary (TODO)
+
+}
+
 void QuantumCircuit::print_circuit(){
     if(this->unitary.size() == 0){
         std::cout << "No operators presented in the circuit, so printing initial state: " << std::endl;

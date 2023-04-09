@@ -25,12 +25,18 @@ int main()
     std::vector<std::complex <double> > initial_state = {0, 0, 0, 0, 0, 0, 0, 1};
     qc.setInitialState(initial_state);
 
-     std::cout << '\n' << "All good 28" << std::endl;
+    std::cout << '\n' << "All good 28" << std::endl;
 
     qc.applyOperator(0, H);
     qc.applyOperator(1, H);
 
     qc.applyOperator(0, X);
+
+    Matrix<std::complex<double>> layer_zero = qc.contruct_layer_unitary(1);
+
+    std::cout << '\n' << "Layer 0:" << std::endl;
+    layer_zero.print();
+    std::cout << std::endl;
 
     qc.applyOperator(0, 1, CNOT);
 

@@ -30,6 +30,10 @@ int Gate::get_target(){
     return this->target_qubit;
 }
 
+bool Gate::get_is_control(){
+    return this->is_control_gate;
+}
+
 void Gate::set_control(int qubit_number){
     this->control_qubit = qubit_number;
 }

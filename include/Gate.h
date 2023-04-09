@@ -29,6 +29,7 @@ class Gate{
     void set_target(int qubit_number);
     int get_target();
 
+    bool get_is_control();
     void set_control(int qubit_number);
     int get_control();
 
@@ -42,6 +43,18 @@ class Gate{
     bool operator!=(const Gate& other) const;
 
 };
+
+const std::complex <double> zero_zero_vals[2][2] = {
+    {1, 0},
+    {0, 0}
+};
+const Matrix<std::complex <double> > Zero(zero_zero_vals);
+
+const std::complex <double> one_one_vals[2][2] = {
+    {0, 0},
+    {0, 1}
+};
+const Matrix<std::complex <double> > One(one_one_vals);
 
 const std::complex <double> identity_vals[2][2] = {
     {1, 0},
