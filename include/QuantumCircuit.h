@@ -41,3 +41,6 @@ class QuantumCircuit {
         std::vector< std::complex <double> > m_state;
 };
 
+std::map<int, int> get_control2target(std::vector<Gate> gates);
+Matrix<std::complex<double>> total_unitary(std::vector<Gate> gates);
+

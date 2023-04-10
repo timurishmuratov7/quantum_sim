@@ -264,7 +264,7 @@ template<typename Num>
 Matrix<Num> total_tensor(std::vector<Matrix<Num>> matrices){
 
     if(matrices.size() == 1){
-        return matrixes[0];
+        return matrices[0];
     }
 
     Matrix<Num> final_matrix = matrices[matrices.size()-1].get_matrix();
