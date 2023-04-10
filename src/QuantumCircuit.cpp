@@ -116,6 +116,16 @@ void QuantumCircuit::nextLayer(){
     this->layer_cursor++;
 }
 
+Matrix<std::complex<double>> QuantumCircuit::contruct_total_unitary(){
+    Matrix<std::complex<double>> final_unitary = contruct_layer_unitary(0);
+
+    for(int i=1; i<=layer_cursor; i++){
+        final_unitary = final_unitary * contruct_layer_unitary(i);
+    }
+
+    return final_unitary;
+}
+
 Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_number){
 
     //Let's first get all the gates on this layer
@@ -141,13 +151,10 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_nu
 
     clean_gate_layers(gates, layers_arr);
 
-    Matrix<std::complex<double>> final_layer_unitary = total_unitary(gates);
-
-    // if there are control gates -> use algorithm to calculate the unitary (TODO)
-
-    // Detect if control gates presented
-
-    // If yes, then call recursive method to construct the final unitary
+    Matrix<std::complex<double>> final_layer_unitary = total_unitary(layers_arr[0]);
+    for(int idx = 1; idx < layers_arr.size(); idx++){
+        final_layer_unitary = final_layer_unitary + total_unitary(layers_arr[idx]);
+    }
 
     return final_layer_unitary;
 
@@ -158,6 +165,7 @@ void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& 
     std::cout << '\n' << "All good 171" << std::endl;
 
     std::map<int, int> control2target = get_control2target(gates);
+
     // Base case: no control gates are found
     if(control2target.empty()){
 
@@ -166,8 +174,8 @@ void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& 
         result.push_back(gates);
         return;
     }
-    // If some control gates are found
 
+    // If some control gates are found
     for(auto it = control2target.begin(); it != control2target.end(); ++it){
         int control = it->first;
         int target = it->second;
@@ -177,23 +185,20 @@ void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& 
         Gate one_gate = Gate(One, false);
         Gate flip_gate = Gate(X, false);
 
-        zero_gate.set_target(control);
-        one_gate.set_target(control);
-        identity_gate.set_target(target);
-        flip_gate.set_target(target);
+        zero_gate.set_target(target);
+        one_gate.set_target(target);
+
+
+        identity_gate.set_target(control);
+        flip_gate.set_target(control);
 
         std::vector<Gate> tmp_left = gates;
-        tmp_left[control] = zero_gate;
-        tmp_left[target] = identity_gate;
-
-        std::cout << '\n' << tmp_left[control].get_is_control() << std::endl;
-
-        tmp_left[control].get_matrix().print();
-
+        tmp_left[target] = zero_gate;
+        tmp_left[control] = identity_gate;
 
         std::vector<Gate> tmp_right = gates;
-        tmp_right[control] = one_gate;
-        tmp_right[target] = flip_gate;
+        tmp_right[target] = one_gate;
+        tmp_right[control] = flip_gate;
 
         clean_gate_layers(tmp_left, result);
         clean_gate_layers(tmp_right, result);
@@ -226,8 +231,6 @@ Matrix<std::complex<double>> total_unitary(std::vector<Gate> gates){
     for(int i=gates.size()-1; i>0; i--){
         final_layer_unitary = tensor(gates[i-1].get_matrix(), final_layer_unitary);
     }
-
-    // if there are control gates -> use algorithm to calculate the unitary (TODO)
 
     return final_layer_unitary;
 }

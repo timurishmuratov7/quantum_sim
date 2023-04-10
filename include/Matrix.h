@@ -142,6 +142,8 @@ public:
     }
 
     Matrix operator*(const Matrix& other) const {
+
+        std::cout << "I'm called" << std::endl;
         Matrix res(rows, other.cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < other.cols; j++) {
