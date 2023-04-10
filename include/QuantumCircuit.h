@@ -43,4 +43,5 @@ class QuantumCircuit {
 
 std::map<int, int> get_control2target(std::vector<Gate> gates);
 Matrix<std::complex<double>> total_unitary(std::vector<Gate> gates);
+void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& result);
 

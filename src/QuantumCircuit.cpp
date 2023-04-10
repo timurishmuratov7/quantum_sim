@@ -137,6 +137,10 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_nu
         return unitary[layer_number][0].get_matrix();
     }
 
+    std::vector<std::vector<Gate>> layers_arr;
+
+    clean_gate_layers(gates, layers_arr);
+
     Matrix<std::complex<double>> final_layer_unitary = total_unitary(gates);
 
     // if there are control gates -> use algorithm to calculate the unitary (TODO)
@@ -149,28 +153,19 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_nu
 
 }
 
-std::map<int, int> get_control2target(std::vector<Gate> gates){
-    std::map<int, int> control2target_qubits;
+void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& result){
 
-    for(int i=0; i<gates.size(); i++){
-        Gate tmp_gate = gates[i];
-        if(tmp_gate.get_is_control()){
-            control2target_qubits[tmp_gate.get_control()] = tmp_gate.get_target();
-        }
-    }
-
-    return control2target_qubits;
-}
-
-std::vector<std::vector<Gate>> clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>> result){
+    std::cout << '\n' << "All good 171" << std::endl;
 
     std::map<int, int> control2target = get_control2target(gates);
     // Base case: no control gates are found
     if(control2target.empty()){
-        result.push_back(gates);
-        return result;
-    }
 
+        std::cout << '\n' << "All good 164" << std::endl;
+
+        result.push_back(gates);
+        return;
+    }
     // If some control gates are found
 
     for(auto it = control2target.begin(); it != control2target.end(); ++it){
@@ -182,8 +177,8 @@ std::vector<std::vector<Gate>> clean_gate_layers(std::vector<Gate> gates, std::v
         Gate one_gate = Gate(One, false);
         Gate flip_gate = Gate(X, false);
 
-        zero_gate.set_control(control);
-        one_gate.set_control(control);
+        zero_gate.set_target(control);
+        one_gate.set_target(control);
         identity_gate.set_target(target);
         flip_gate.set_target(target);
 
@@ -191,17 +186,37 @@ std::vector<std::vector<Gate>> clean_gate_layers(std::vector<Gate> gates, std::v
         tmp_left[control] = zero_gate;
         tmp_left[target] = identity_gate;
 
+        std::cout << '\n' << tmp_left[control].get_is_control() << std::endl;
+
+        tmp_left[control].get_matrix().print();
+
 
         std::vector<Gate> tmp_right = gates;
-        tmp_left[control] = one_gate;
-        tmp_left[target] = flip_gate;
+        tmp_right[control] = one_gate;
+        tmp_right[target] = flip_gate;
 
         clean_gate_layers(tmp_left, result);
         clean_gate_layers(tmp_right, result);
     }
 
-    return result;
-    
+    return;
+}
+
+
+std::map<int, int> get_control2target(std::vector<Gate> gates){
+    std::map<int, int> control2target_qubits;
+
+    for(int i=0; i<gates.size(); i++){
+        Gate tmp_gate = gates[i];
+        if(tmp_gate.get_is_control()){
+            control2target_qubits[tmp_gate.get_control()] = tmp_gate.get_target();
+            //std::cout << "control: " << tmp_gate.get_control() << ", target: " << tmp_gate.get_target() << std::endl;
+        }
+        std::cout << "-" << tmp_gate.get_name();
+    }
+    std::cout<<std::endl;
+
+    return control2target_qubits;
 }
 
 

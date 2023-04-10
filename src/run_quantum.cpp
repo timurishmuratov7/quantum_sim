@@ -30,7 +30,7 @@ int main()
     qc.applyOperator(0, H);
     qc.applyOperator(1, H);
 
-    qc.applyOperator(0, X);
+    qc.applyOperator(0, 1, CNOT);
 
     Matrix<std::complex<double>> layer_zero = qc.contruct_layer_unitary(1);
 
@@ -40,7 +40,7 @@ int main()
 
     qc.applyOperator(0, 1, CNOT);
 
-     std::cout << '\n' << "All good 33" << std::endl;
+    std::cout << '\n' << "All good 33" << std::endl;
 
     qc.print_circuit();
 }
