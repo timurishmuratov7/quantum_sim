@@ -258,7 +258,23 @@ Matrix<Num> tensor(const Matrix<Num> matrix1, const Matrix<Num> other) {
 
         return result;
 
+}
+
+template<typename Num>
+Matrix<Num> total_tensor(std::vector<Matrix<Num>> matrices){
+
+    if(matrices.size() == 1){
+        return matrixes[0];
     }
+
+    Matrix<Num> final_matrix = matrices[matrices.size()-1].get_matrix();
+    
+    for(int i=matrices.size()-1; i>0; i--){
+        final_matrix = tensor(matrices[i-1].get_matrix(), final_matrix);
+    }
+
+    return final_matrix;
+}
 
 
 #endif
