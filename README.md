@@ -47,8 +47,12 @@ We simulate quantum computers with nice C++ code
 ## :sparkles: Features ##
 
 ✅ Construct quantum circuits \
-:soon: Simulate quantum circuits \
-:soon: UI
+✅ Simulate quantum circuits \
+    * ✅ Bell-state circuit \
+    * ✅ Circuits consisting of Clifford gates \
+    * 🔜 Quantum Teleporatation (TODO: add disentabglement) \
+    * 🔜 Superdense Coding \
+:soon: good UI
 
 ## :rocket: Technologies ##
 
@@ -74,6 +78,8 @@ $ cmake
 
 # Go to build directory
 $ cd build
+
+# Edit src/run_quantum.cpp to construc a circuit of your preference
 
 # Compile the program
 $ make
