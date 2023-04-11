@@ -120,7 +120,7 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_total_unitary(){
     Matrix<std::complex<double>> final_unitary = contruct_layer_unitary(0);
 
     for(int i=1; i<=layer_cursor; i++){
-        final_unitary = final_unitary * contruct_layer_unitary(i);
+        final_unitary = final_unitary.multiply(contruct_layer_unitary(i));
     }
 
     return final_unitary;

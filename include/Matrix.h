@@ -143,7 +143,7 @@ public:
 
     Matrix operator*(const Matrix& other) const {
 
-        std::cout << "I'm called" << std::endl;
+        std::cout << "Multiplication let's go" << std::endl;
         Matrix res(rows, other.cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < other.cols; j++) {
@@ -151,6 +151,7 @@ public:
                 for (int k = 0; k < cols; k++) {
                     sum += mat[i][k] * other.get(k, j);
                 }
+                std::cout << "Martix indexes: (" << i << ", "<< j << ") are set to " << sum << std::endl;
                 res.set(i, j, sum);
             }
         }

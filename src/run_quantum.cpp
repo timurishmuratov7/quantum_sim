@@ -39,7 +39,7 @@ int main()
     std::cout << std::endl;
 
 
-    Matrix<std::complex<double>> final_unitary = layer_zero * layer_one;
+    Matrix<std::complex<double>> final_unitary = qc.contruct_total_unitary();
     
     std::cout << '\n' << "FINAL UNITARY: " << std::endl;
     final_unitary.print();
