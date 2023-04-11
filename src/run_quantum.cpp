@@ -22,7 +22,7 @@ int main()
      std::cout << '\n' << "All good 22" << std::endl;
 
     // Set the initial state of the qubits to |01⟩
-    std::vector<std::complex <double> > initial_state = {0, 0, 0, 1};
+    std::vector<std::complex <double> > initial_state = {1, 0, 0, 0};
     qc.setInitialState(initial_state);
 
     std::cout << '\n' << "All good 28" << std::endl;
@@ -31,22 +31,28 @@ int main()
 
     qc.applyOperator(0, 1, CNOT);
 
-    Matrix<std::complex<double>> layer_zero = qc.contruct_layer_unitary(0);
-    Matrix<std::complex<double>> layer_one = qc.contruct_layer_unitary(1);
-
-    std::cout << '\n' << "layer 0: " << std::endl;
-    layer_zero.print();
+    Matrix<std::complex<double>> zero_unitary = qc.contruct_layer_unitary(0);
+    
+    std::cout << '\n' << "ZERO UNITARY: " << std::endl;
+    zero_unitary.print();
     std::cout << std::endl;
 
+    Matrix<std::complex<double>> one_unitary = qc.contruct_layer_unitary(1);
+    
+    std::cout << '\n' << "ONE UNITARY: " << std::endl;
+    one_unitary.print();
+    std::cout << std::endl;
 
     Matrix<std::complex<double>> final_unitary = qc.contruct_total_unitary();
     
     std::cout << '\n' << "FINAL UNITARY: " << std::endl;
     final_unitary.print();
+    std::cout << std::endl;
 
+    std::cout << '\n' << "FINAL STATE: " << std::endl;
+    Matrix<std::complex<double>> final_state = qc.measure_final_state();
+    final_state.print();
 
-    //std::cout << '\n' << "Layer 0:" << std::endl;
-    //layer_zero.print();
     std::cout << std::endl;
 
     qc.print_circuit();

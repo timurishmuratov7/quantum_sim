@@ -19,6 +19,8 @@ class QuantumCircuit {
 
         void nextLayer();
 
+        Matrix<std::complex <double> > measure_final_state();
+
         Matrix<std::complex<double>> contruct_total_unitary();
 
         Matrix<std::complex<double>> contruct_layer_unitary(int layer_number);

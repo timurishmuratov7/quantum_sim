@@ -142,8 +142,6 @@ public:
     }
 
     Matrix operator*(const Matrix& other) const {
-
-        std::cout << "Multiplication let's go" << std::endl;
         Matrix res(rows, other.cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < other.cols; j++) {
@@ -151,7 +149,6 @@ public:
                 for (int k = 0; k < cols; k++) {
                     sum += mat[i][k] * other.get(k, j);
                 }
-                std::cout << "Martix indexes: (" << i << ", "<< j << ") are set to " << sum << std::endl;
                 res.set(i, j, sum);
             }
         }
@@ -247,17 +244,11 @@ Matrix<Num> tensor(const Matrix<Num> matrix1, const Matrix<Num> other) {
                         res = matrix1.get(internal_i, internal_j) * current_num;
                         int row_idx = internal_i+cols*j;
                         int col_idx = internal_j+rows*i;
-                        result.set(row_idx, col_idx, res);
-                        
-                        if (row_idx == 1 && col_idx == 1) {
-                            std::cout << "res is set to: " << res << std::endl;
-                            result.print();
-                        }                  
+                        result.set(row_idx, col_idx, res);       
                     }  
                 }
             }
         }
-        //result.print();
 
         return result;
 
