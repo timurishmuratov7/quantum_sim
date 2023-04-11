@@ -50,7 +50,7 @@ We simulate quantum computers with nice C++ code
 ✅ Simulate quantum circuits \
     * ✅ Bell-state circuit \
     * ✅ Circuits consisting of Clifford gates \
-    * 🔜 Quantum Teleporatation (TODO: add disentabglement) \
+    * 🔜 Quantum Teleporatation (TODO: add disentanglement) \
     * 🔜 Superdense Coding \
 :soon: good UI
 
