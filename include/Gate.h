@@ -86,7 +86,7 @@ const std::complex <double> cnot_vals[4][4] = {
     {0, 0, 0, 1},
     {0, 0, 1, 0}
 };
-const Matrix<std::complex <double> > CNOT(cnot_vals, "CNOT");
+const Matrix<std::complex <double> > CNOT(x_vals, "CNOT");
 
 const std::complex <double> cz_vals[4][4] = {
     {1, 0, 0, 0},
@@ -94,7 +94,7 @@ const std::complex <double> cz_vals[4][4] = {
     {0, 0, 1, 0},
     {0, 0, 0, -1}
 };
-const Matrix<std::complex <double> > CZ(cz_vals, "CZ");
+const Matrix<std::complex <double> > CZ(z_vals, "CZ");
 
 
 #endif

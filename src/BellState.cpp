@@ -7,29 +7,23 @@
 int main()
 {
 
-    std::cout << '\n' << "Welcome to quantum" << std::endl;
+    std::cout << '\n' << "Creating Bell state" << std::endl;
 
-    std::cout << '\n';
+    QuantumCircuit qc(2);
 
-    QuantumCircuit qc(3);
-
-    // Set the initial state of the qubits to |01⟩
+    // Set the initial state of the qubits to |00⟩
     std::vector<std::complex <double> > initial_state = {1, 0, 0, 0};
     qc.setInitialState(initial_state);
 
-    Matrix<std::complex <double> > Unitary = tensor(Identity, H);
+    qc.applyOperator(0, H);
 
-    std::cout << "Newest matrix: " <<std::endl;
-    Unitary.print();
+    qc.applyOperator(0, 1, CNOT);
 
-    Matrix<std::complex <double> > final_Operator = CNOT * Unitary;
+    std::cout << '\n' << "FINAL STATE: " << std::endl;
+    Matrix<std::complex<double>> final_state = qc.measure_final_state();
+    final_state.print();
 
-    std::cout << "final_Operator matrix: " <<std::endl;
+    std::cout << std::endl;
 
-    final_Operator.print(); 
-
-    final_Operator = final_Operator.multiply(initial_state);
-    
-    std::cout << "RESULT: " <<std::endl;
-    final_Operator.print();
+    qc.print_circuit();
 }

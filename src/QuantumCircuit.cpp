@@ -113,6 +113,14 @@ void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Ma
 }
 
 void QuantumCircuit::nextLayer(){
+    std::vector<Gate> layer;
+    Gate empty_gate = Gate();
+
+    for (int row = 0; row < m_num_qubits; row++){
+        layer.push_back(empty_gate);
+    }
+    unitary.push_back(layer);
+
     this->layer_cursor++;
 }
 
@@ -144,8 +152,6 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_nu
 
     std::map<int, int> control2target_qubits = get_control2target(gates);
 
-    std::cout << '\n' << "All good 137" << std::endl;
-
     // need to do tensor products for matrices
     if(m_num_qubits == 1){
         return unitary[layer_number][0].get_matrix();
@@ -166,15 +172,10 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_nu
 
 void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& result){
 
-    std::cout << '\n' << "All good 171" << std::endl;
-
     std::map<int, int> control2target = get_control2target(gates);
 
     // Base case: no control gates are found
     if(control2target.empty()){
-
-        std::cout << '\n' << "All good 164" << std::endl;
-
         result.push_back(gates);
         return;
     }
@@ -187,7 +188,7 @@ void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& 
         Gate zero_gate = Gate(Zero, false);
         Gate identity_gate = Gate();
         Gate one_gate = Gate(One, false);
-        Gate flip_gate = Gate(X, false);
+        Gate flip_gate = Gate(gates[control].get_matrix(), false);
 
         zero_gate.set_target(control);
         one_gate.set_target(control);

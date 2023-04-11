@@ -14,11 +14,8 @@ typedef vector<cvector> cmatrix;
 
 // Define the initial state
 cvector psi = {1, 0, 0, 0, 0, 0, 0, 0}; // Alice's state
-cvector poeer = {1/sqrt(2), 0, 1/sqrt(2), 0, 0, 0, 0, 0}; // Alice's state
 
 int main() {
-
-    /*
 
     QuantumCircuit qc(3);
 
@@ -26,48 +23,29 @@ int main() {
     std::vector<std::complex <double> > initial_state = psi;
     qc.setInitialState(initial_state);
 
-    cout << "Initial: " << endl;
-    cout << qc << endl;
-
     qc.applyOperator(1, H);
-    cout << "H(1): " << endl;
-    cout << qc << endl;
 
-    qc.setInitialState(poeer);
-    cout << "New initial state: " << endl;
-    cout << qc << endl;
+    qc.applyOperator(1, 2, CNOT);
 
-    qc.applyCNOT(1, 2);
-
-    cout << "applyCNOT(1, 2): " << endl;
-    cout << qc << endl;
-
-    qc.applyCNOT(0, 1);
-
-    cout << "applyCNOT(0, 1): " << endl;
-    cout << qc << endl;
+    qc.applyOperator(0, 1, CNOT);
 
     qc.applyOperator(0, H);
 
-    cout << "H(0): " << endl;
-    cout << qc << endl;
+    qc.nextLayer();
 
-    qc.applyCNOT(1, 2);
+    qc.applyOperator(1, 2, CNOT);
 
-    cout << "applyCNOT(1, 2): " << endl;
-    cout << qc << endl;
+    qc.applyOperator(0, 2, CZ);
 
-    qc.applyCZ(0, 2);
+    qc.measure_final_state().print();
 
-    cout << "applyCZ(0, 2): " << endl;
-    cout << qc << endl;
+    qc.print_circuit();
 
-    int result = qc.measure(2);
-    cout << "Measured " << result << endl;
- 
-    cout << "After measurement:" << endl;
-    cout << qc << endl;*/
+    std::cout << std::endl;
 
+    qc.contruct_total_unitary().print();
+
+    //TODO: add disentabglement logic for complete quantum teleportation. See: https://qiskit.org/documentation/stable/0.32/_modules/qiskit/extensions/quantum_initializer/initializer.html#Initialize.gates_to_uncompute
     
     return 0;
 }
