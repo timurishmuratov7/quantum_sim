@@ -20,7 +20,7 @@ int main()
     qc.applyOperator(0, 1, CNOT);
 
     std::cout << '\n' << "FINAL STATE: " << std::endl;
-    Matrix<std::complex<double>> final_state = qc.measure_final_state();
+    Matrix final_state = qc.measure_final_state();
     final_state.print();
 
     std::cout << std::endl;

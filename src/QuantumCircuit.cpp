@@ -28,7 +28,7 @@ void QuantumCircuit::setInitialState(const std::vector<std::complex <double> >& 
 }
 
 
-void QuantumCircuit::applyOperator(int target_qubit, const Matrix<std::complex <double> > Operator) {
+void QuantumCircuit::applyOperator(int target_qubit, const Matrix Operator) {
     if (target_qubit < 0 || target_qubit >= m_num_qubits) {
         std::cerr << "Error: Invalid target qubit" << std::endl;
         return;
@@ -65,7 +65,7 @@ void QuantumCircuit::applyOperator(int target_qubit, const Matrix<std::complex <
         
 }
 
-void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Matrix<std::complex <double> > Operator) {
+void QuantumCircuit::applyOperator(int control_qubit, int target_qubit, const Matrix Operator) {
     if (target_qubit < 0 || target_qubit >= m_num_qubits || control_qubit == target_qubit) {
         std::cerr << "Error: Invalid target qubit" << std::endl;
         return;
@@ -124,14 +124,14 @@ void QuantumCircuit::nextLayer(){
     this->layer_cursor++;
 }
 
-Matrix<std::complex <double> > QuantumCircuit::measure_final_state(){
+Matrix QuantumCircuit::measure_final_state(){
 
     return contruct_total_unitary().multiply(m_state);
 
 }
 
-Matrix<std::complex<double>> QuantumCircuit::contruct_total_unitary(){
-    Matrix<std::complex<double>> final_unitary = contruct_layer_unitary(layer_cursor);
+Matrix QuantumCircuit::contruct_total_unitary(){
+    Matrix final_unitary = contruct_layer_unitary(layer_cursor);
 
     for(int i=layer_cursor-1; i>=0; i--){
         final_unitary = final_unitary * contruct_layer_unitary(i);
@@ -140,7 +140,7 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_total_unitary(){
     return final_unitary;
 }
 
-Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_number){
+Matrix QuantumCircuit::contruct_layer_unitary(int layer_number){
 
     //Let's first get all the gates on this layer
 
@@ -161,7 +161,7 @@ Matrix<std::complex<double>> QuantumCircuit::contruct_layer_unitary(int layer_nu
 
     clean_gate_layers(gates, layers_arr);
 
-    Matrix<std::complex<double>> final_layer_unitary = total_unitary(layers_arr[0]);
+    Matrix final_layer_unitary = total_unitary(layers_arr[0]);
     for(int idx = 1; idx < layers_arr.size(); idx++){
         final_layer_unitary = final_layer_unitary + total_unitary(layers_arr[idx]);
     }
@@ -227,11 +227,11 @@ std::map<int, int> get_control2target(std::vector<Gate> gates){
 }
 
 
-Matrix<std::complex<double>> total_unitary(std::vector<Gate> gates){
-    Matrix<std::complex<double>> final_layer_unitary = gates[0].get_matrix();
+Matrix total_unitary(std::vector<Gate> gates){
+    Matrix final_layer_unitary = gates[0].get_matrix();
     
     for(int i=1; i<gates.size(); i++){
-        final_layer_unitary = tensor(gates[i].get_matrix(), final_layer_unitary);
+        final_layer_unitary = Matrix::tensor(gates[i].get_matrix(), final_layer_unitary);
     }
 
     return final_layer_unitary;

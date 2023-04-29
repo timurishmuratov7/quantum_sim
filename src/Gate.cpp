@@ -5,7 +5,7 @@ Gate::Gate() {
     this->name = "I";
 }
 
-Gate::Gate(const Matrix<std::complex<double> > matrix, bool is_control_gate){
+Gate::Gate(const Matrix matrix, bool is_control_gate){
 
     this->name = matrix.get_name();
 
@@ -15,7 +15,7 @@ Gate::Gate(const Matrix<std::complex<double> > matrix, bool is_control_gate){
 
 Gate::Gate(const std::complex<double> matrix_values[2][2], bool is_control_gate){
 
-    const Matrix<std::complex <double> > matrix(matrix_values);
+    const Matrix matrix(matrix_values);
 
     this->gate_matrix = matrix;
 
@@ -50,7 +50,7 @@ std::string Gate::get_name(){
     return this->name;
 }
 
-Matrix<std::complex <double> > Gate::get_matrix(){
+Matrix Gate::get_matrix(){
     return this->gate_matrix;
 }
 

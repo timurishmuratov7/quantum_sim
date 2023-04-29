@@ -13,17 +13,17 @@ class QuantumCircuit {
 
         void setInitialState(const std::vector<std::complex <double> >& initial_state);
 
-        void applyOperator(int target_qubit, const Matrix<std::complex <double> > Operator);
+        void applyOperator(int target_qubit, const Matrix Operator);
 
-        void applyOperator(int control_qubit, int target_qubit, const Matrix<std::complex <double> > Operator);
+        void applyOperator(int control_qubit, int target_qubit, const Matrix Operator);
 
         void nextLayer();
 
-        Matrix<std::complex <double> > measure_final_state();
+        Matrix measure_final_state();
 
-        Matrix<std::complex<double>> contruct_total_unitary();
+        Matrix contruct_total_unitary();
 
-        Matrix<std::complex<double>> contruct_layer_unitary(int layer_number);
+        Matrix contruct_layer_unitary(int layer_number);
 
         int measure(int target_qubit);
 
@@ -46,6 +46,6 @@ class QuantumCircuit {
 };
 
 std::map<int, int> get_control2target(std::vector<Gate> gates);
-Matrix<std::complex<double>> total_unitary(std::vector<Gate> gates);
+Matrix total_unitary(std::vector<Gate> gates);
 void clean_gate_layers(std::vector<Gate> gates, std::vector<std::vector<Gate>>& result);
 
