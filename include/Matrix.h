@@ -109,6 +109,21 @@ public:
         return this->name;
     }
 
+    class MatrixRow {
+    private:
+        std::vector<std::complex<double>>& row;
+    public:
+        MatrixRow(std::vector<std::complex<double>>& r) : row(r) {}
+
+        std::complex<double>& operator[](int j) {
+            return row[j];
+        }
+    };
+
+    MatrixRow operator[](int i) {
+        return MatrixRow(mat[i]);
+    }
+
     Matrix operator+(const Matrix& other) const {
         Matrix res(rows, cols);
         for (int i = 0; i < rows; i++) {
@@ -222,7 +237,6 @@ public:
             std::cout << std::endl;
         }
     }
-
 
 
     static Matrix tensor(const Matrix matrix1, const Matrix other) {
