@@ -21,7 +21,6 @@ public:
         this->cols = 0;
     }
 
-
     Matrix(int rows, int cols) {
         this->rows = rows;
         this->cols = cols;
@@ -115,10 +114,17 @@ public:
     public:
         MatrixRow(std::vector<std::complex<double>>& r) : row(r) {}
 
+        std::complex<double> const& operator[](int j) const {
+            return row[j];
+        }
         std::complex<double>& operator[](int j) {
             return row[j];
         }
     };
+
+    MatrixRow const operator[](int i) const {
+        return MatrixRow(const_cast<std::vector<std::complex<double>>&>(mat[i]));
+    }
 
     MatrixRow operator[](int i) {
         return MatrixRow(mat[i]);
@@ -267,6 +273,54 @@ public:
         return result;
     }
 
+    static bool isUnitary(const Matrix& matrix) {
+        int n = matrix.get_n_rows();
+
+        // Check that the matrix is square
+        if (n != matrix.get_n_cols()) {
+            return false;
+        }
+
+        // Check that U†U = I
+        std::vector<std::vector<std::complex<double>>> U_conj_transpose(n, std::vector<std::complex<double>>(n));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                U_conj_transpose[i][j] = std::conj(matrix[j][i]);
+            }
+        }
+
+        std::vector<std::vector<std::complex<double>>> I(n, std::vector<std::complex<double>>(n));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    I[i][j] = 1.0;
+                } else {
+                    I[i][j] = 0.0;
+                }
+            }
+        }
+
+        std::vector<std::vector<std::complex<double>>> product(n, std::vector<std::complex<double>>(n));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                std::complex<double> sum = 0.0;
+                for (int k = 0; k < n; k++) {
+                    sum += U_conj_transpose[i][k] * matrix[k][j];
+                }
+                product[i][j] = sum;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (abs(product[i][j] - I[i][j]) > 1e-10) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
 };
 
